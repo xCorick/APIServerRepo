@@ -16,4 +16,9 @@
     <ProjectReference Include="..\Api_Capacitacion.Model\Api_Capacitacion.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Servicios\" />
+  </ItemGroup>
+
 </Project>
