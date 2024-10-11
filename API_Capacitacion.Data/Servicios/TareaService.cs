@@ -26,7 +26,7 @@ namespace API_Capacitacion.Data.Servicios
             string sqlQuery = "select * from fun_task_create(" +
                 "p_tarea:= @task," +
                 "p_descripcion:= @descripcion," +
-                "p_idUsuario:= @userId," +
+                "p_idUsuario:= @userId" +
                 ");";
 
             try
@@ -43,7 +43,7 @@ namespace API_Capacitacion.Data.Servicios
                     },
                 map: (tarea, user) =>
                 {
-                    tarea.User.idUsuario = user.idUsuario;
+                    tarea.User = user;
                     return tarea;
                 },
                 splitOn: "usuarioId"
@@ -53,7 +53,7 @@ namespace API_Capacitacion.Data.Servicios
 
                 return result.FirstOrDefault();
             }
-            catch
+            catch( Exception ex ) 
             {
                 return null;
             }
