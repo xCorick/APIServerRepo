@@ -8,17 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Npgsql" Version="8.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\API_Capacitacion.DTO\API_Capacitacion.DTO.csproj" />
     <ProjectReference Include="..\Api_Capacitacion.Model\Api_Capacitacion.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Servicios\" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Api_Capacitacion.Model
 {
-    public class UserModelcs
+    public class UserModel
     {
         public int idUsuario { get; set; }
         public string? nombres { get; set; }
