@@ -1,6 +1,7 @@
 using API_Capacitacion.Data;
 using API_Capacitacion.Data.Interfaces;
 using API_Capacitacion.Data.Servicios;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 PostgresSQLConfiguration postgressqlconfiguration = new PostgresSQLConfiguration(Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "");
 builder.Services.AddSingleton(postgressqlconfiguration);
 
+builder.Services.AddScoped<IUserServices, UserService>();
 builder.Services.AddScoped<ITareaServices, TareaService>();
 
 //servicios
