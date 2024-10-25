@@ -23,18 +23,44 @@ namespace API_Capacitacion.Data.Servicios
             throw new NotImplementedException();
         }
         #endregion
-        #region FibdAll
+        #region FindAll
         public async Task<IEnumerable<UserModel>> FindAll()
         {
             string sqlQuery = "select * from view_usuario";
             using NpgsqlConnection connection = CreateConnection();
 
+            Dictionary<int, List<TareaModel>> userTasks = [];
+
             try
             {
                 await connection.OpenAsync();
-                IEnumerable<UserModel> users = await connection.QueryAsync<UserModel>(sqlQuery);
+                IEnumerable<UserModel> users = await connection.QueryAsync<UserModel, TareaModel, UserModel>(
+                        sql: sqlQuery,
+                        map: (user, task) =>
+                        {
+                            List<TareaModel> currentTasks = [];
+                            userTasks.TryGetValue(user.idUsuario, out currentTasks);
+                            currentTasks ??= [];
+                            if (currentTasks.Count == 0 && task != null)
+                            {
+                                currentTasks = [task];
+                            }
+                            else if(currentTasks.Count > 0 && task != null)
+                            {
+                                currentTasks.Add(task);
+                            }
+                            userTasks[user.idUsuario] = currentTasks;
+                            return user;
+                        },
+                        splitOn: "idTarea"
+                    );
                 await connection.CloseAsync();
-                return users;
+                IEnumerable<UserModel> newUserList = users.Distinct().ToList().Select(user =>
+                {
+                    user.Tareas = userTasks[user.idUsuario];
+                    return user;
+                });
+                return newUserList;
             }
             catch (Exception ex)
             {
